@@ -7,7 +7,6 @@
 <style>
   /* ───── Design tokens ───── */
   :root {
-    /* Pink-blue theme — pale-blue base, pink + blue accents */
     --bg: #eef5fb;
     --bg-soft: #f7fbff;
     --surface: #ffffff;
@@ -15,8 +14,8 @@
     --ink: #14306b;
     --ink-dim: #3e5a89;
     --ink-mute: #7592b8;
-    --accent: #ff7ab6;          /* pink */
-    --accent-2: #4eb1e6;        /* blue */
+    --accent: #ff7ab6;
+    --accent-2: #4eb1e6;
     --danger: #e85a7a;
     --radius-l: 18px;
     --radius-m: 12px;
@@ -27,15 +26,14 @@
     --header-h: 88px;
     --footer-h: 56px;
 
-    /* per-category brand — kept distinct so 8 categories stay scannable */
-    --c-lang: #6fcf97;
-    --c-math: #4eb1e6;
-    --c-code: #9d7be0;
-    --c-human: #f49c5a;
+    --c-lang:    #6fcf97;
+    --c-math:    #4eb1e6;
+    --c-code:    #9d7be0;
+    --c-human:   #f49c5a;
     --c-science: #4ec0c0;
-    --c-life: #f5c84a;
-    --c-comm: #ff8fb8;
-    --c-values: #dab84e;
+    --c-life:    #f5c84a;
+    --c-comm:    #ff8fb8;
+    --c-values:  #dab84e;
   }
 
   *, *::before, *::after { box-sizing: border-box; }
@@ -97,296 +95,275 @@
     line-height: 1.2;
     min-width: 0;
   }
-  .brand-name {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--ink);
-    letter-spacing: .02em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .brand-en {
-    font-size: .76rem;
-    color: var(--ink-mute);
-    font-weight: 500;
-    letter-spacing: .02em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .spacer { flex: 1; }
-  .topbar-actions { display: flex; gap: 8px; align-items: center; }
-
-  /* Language toggle pill */
-  .lang-toggle {
-    display: flex;
-    background: var(--surface-2);
-    border: 1.5px solid rgba(78,177,230,.25);
-    border-radius: 999px;
-    overflow: hidden;
-    height: 36px;
-    font-size: .82rem;
-    font-weight: 600;
-    cursor: pointer;
+  .brand-name { font-size: 1rem; color: var(--ink); }
+  .brand-en   { font-size: .68rem; color: var(--ink-mute); font-weight: 400; }
+  .brand-logo-fallback {
+    width: 64px; height: 64px;
+    border-radius: 14px;
+    background: var(--surface);
+    box-shadow: var(--shadow-1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
     flex-shrink: 0;
   }
-  .lang-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  .lang-toggle button {
-    background: transparent;
-    border: none;
-    padding: 0 14px;
-    height: 100%;
-    color: var(--ink-mute);
-    font: inherit;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background .15s ease, color .15s ease;
-    letter-spacing: .02em;
-    white-space: nowrap;
+  .spacer { flex: 1; }
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  .lang-toggle button.active {
-    background: linear-gradient(135deg, var(--accent-2) 0%, #7fc8f4 100%);
-    color: #ffffff;
-  }
-  .lang-toggle button:hover:not(.active) { background: rgba(78,177,230,.12); color: var(--ink); }
-
   .btn {
-    appearance: none;
-    border: 1px solid rgba(255,255,255,.08);
     background: var(--surface);
-    color: var(--ink);
-    height: 40px;
-    min-width: 40px;
-    padding: 0 14px;
-    border-radius: 10px;
-    font: inherit;
-    font-size: .9rem;
+    border: 1px solid rgba(20,40,90,.10);
+    border-radius: var(--radius-s);
+    color: var(--ink-dim);
     cursor: pointer;
+    font-family: inherit;
+    font-size: .80rem;
+    font-weight: 600;
+    padding: 6px 10px;
+    transition: background .12s, color .12s, box-shadow .12s;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: transform .12s ease, background .15s ease, border-color .15s ease;
+    gap: 4px;
   }
-  .btn:hover { background: var(--surface-2); border-color: rgba(255,255,255,.14); }
-  .btn:active { transform: scale(.97); }
-  .btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .btn[disabled] { opacity: .4; cursor: not-allowed; }
-  .btn.icon { padding: 0 10px; }
-  .btn .ico { width: 16px; height: 16px; display: inline-block; }
-
-  .toggle {
-    display: none;
-    background: var(--surface);
-    border: 1px solid rgba(255,255,255,.08);
+  .btn:hover:not(:disabled) {
+    background: var(--surface-2);
     color: var(--ink);
-    height: 40px;
-    width: 44px;
-    border-radius: 10px;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
+    box-shadow: var(--shadow-1);
   }
-  .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn:active:not(:disabled) { transform: scale(.97); }
+  .btn.icon { padding: 6px 9px; }
+  .btn:disabled { opacity: .38; cursor: not-allowed; }
 
-  /* ───── Main layout ───── */
+  /* Lang toggle */
+  .lang-toggle {
+    display: flex;
+    border: 1px solid rgba(20,40,90,.10);
+    border-radius: var(--radius-s);
+    overflow: hidden;
+  }
+  .lang-toggle button {
+    background: var(--surface);
+    border: none;
+    border-radius: 0;
+    color: var(--ink-dim);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 6px 10px;
+    transition: background .12s, color .12s;
+  }
+  .lang-toggle button.active {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  /* ───── Layout ───── */
   main {
     flex: 1;
     display: grid;
     grid-template-columns: var(--sidebar-w) 1fr;
+    overflow: hidden;
     min-height: 0;
   }
 
-  /* ───── Sidebar (categories) ───── */
+  /* ───── Sidebar ───── */
   aside {
-    background: var(--bg-soft);
-    border-right: 1px solid rgba(255,255,255,.06);
+    background: var(--surface);
+    border-right: 1px solid rgba(20,40,90,.08);
     display: flex;
     flex-direction: column;
     overflow: hidden;
     min-height: 0;
   }
+  aside.collapsed { display: none; }
+
   .side-head {
-    padding: 14px 16px 8px;
-    font-size: .76rem;
-    color: var(--ink-mute);
+    font-size: .70rem;
+    font-weight: 700;
+    letter-spacing: .07em;
     text-transform: uppercase;
-    letter-spacing: .12em;
-    font-weight: 600;
+    color: var(--ink-mute);
+    padding: 14px 16px 8px;
+    flex: 0 0 auto;
   }
+
   .cat-list {
     list-style: none;
     margin: 0;
-    padding: 8px 12px 16px;
+    padding: 4px 8px 12px;
     overflow-y: auto;
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    min-height: 0;
   }
-  .cat-list::-webkit-scrollbar { width: 8px; }
-  .cat-list::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,.08);
-    border-radius: 4px;
-  }
+  .cat-list::-webkit-scrollbar { width: 4px; }
+  .cat-list::-webkit-scrollbar-thumb { background: rgba(20,40,90,.12); border-radius: 2px; }
 
   .cat {
-    appearance: none;
-    border: 1px solid transparent;
-    background: transparent;
-    color: var(--ink);
-    text-align: left;
     width: 100%;
-    min-height: 64px;
-    padding: 10px 12px;
+    background: transparent;
+    border: 1.5px solid transparent;
     border-radius: var(--radius-m);
+    color: var(--ink-dim);
     cursor: pointer;
-    display: grid;
-    grid-template-columns: 44px 1fr auto;
+    display: flex;
     align-items: center;
-    gap: 12px;
-    transition: background .15s ease, border-color .15s ease, transform .08s ease;
-    font: inherit;
-  }
-  .cat:hover { background: rgba(255,255,255,.04); }
-  .cat:active { transform: scale(.99); }
-  .cat:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  .cat .glyph {
-    width: 44px; height: 44px;
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    font-size: 1.35rem;
-    background: var(--cat-color, var(--surface));
-    color: #0b1020;
-    box-shadow: inset 0 -2px 0 rgba(0,0,0,.18);
-  }
-  .cat .label {
-    font-size: 1rem;
+    gap: 10px;
+    font-family: inherit;
+    font-size: .85rem;
     font-weight: 600;
-    line-height: 1.2;
+    padding: 9px 10px;
+    text-align: left;
+    transition: background .13s, border-color .13s, color .13s;
+    margin-bottom: 3px;
+    position: relative;
+  }
+  .cat::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 20%; bottom: 20%;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
+    background: var(--cat-color, var(--accent));
+    opacity: 0;
+    transition: opacity .13s;
+  }
+  .cat:hover {
+    background: var(--surface-2);
+    border-color: rgba(20,40,90,.07);
     color: var(--ink);
   }
-  .cat .label small {
-    display: block;
-    font-size: .72rem;
-    color: var(--ink-mute);
-    font-weight: 500;
-    letter-spacing: .02em;
-    margin-top: 2px;
-  }
-  .cat .status {
-    font-size: .72rem;
-    color: var(--ink-mute);
-    text-align: right;
-    line-height: 1.2;
-  }
-  .cat .status .ready { color: var(--cat-color, var(--accent)); }
-  .cat .status .missing { color: var(--danger); }
-
   .cat[aria-selected="true"] {
-    background: rgba(255,255,255,.06);
-    border-color: var(--cat-color, var(--accent));
-    box-shadow: inset 3px 0 0 var(--cat-color, var(--accent));
+    background: color-mix(in srgb, var(--cat-color, var(--accent)) 14%, transparent);
+    border-color: color-mix(in srgb, var(--cat-color, var(--accent)) 40%, transparent);
+    color: var(--ink);
   }
-  .cat[aria-selected="true"] .label { color: var(--ink); }
+  .cat[aria-selected="true"]::before { opacity: 1; }
 
-  /* ───── Stage (iframe area) ───── */
-  .stage {
-    position: relative;
+  .glyph { font-size: 1.15rem; flex-shrink: 0; width: 24px; text-align: center; }
+  .cat-label {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    min-width: 0;
-    min-height: 0;
-    background: var(--bg);
+    line-height: 1.25;
   }
+  .cat-label span { display: block; }
+  .cat-label small { font-size: .68rem; font-weight: 400; color: var(--ink-mute); }
+  .cat-badge {
+    background: var(--surface-2);
+    border: 1px solid rgba(20,40,90,.08);
+    border-radius: 20px;
+    color: var(--ink-mute);
+    font-size: .65rem;
+    font-weight: 700;
+    min-width: 18px;
+    padding: 1px 5px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .cat[aria-selected="true"] .cat-badge {
+    background: color-mix(in srgb, var(--cat-color, var(--accent)) 20%, transparent);
+    color: var(--ink-dim);
+    border-color: color-mix(in srgb, var(--cat-color, var(--accent)) 40%, transparent);
+  }
+
+  /* ───── Stage ───── */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+    background: var(--bg-soft);
+  }
+
+  /* Stage bar */
   .stage-bar {
     flex: 0 0 auto;
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    background: var(--bg-soft);
-    font-size: .9rem;
+    padding: 8px 20px;
+    background: var(--surface);
+    border-bottom: 1px solid rgba(20,40,90,.07);
+    min-height: 44px;
   }
-  .stage-bar .crumbs {
-    flex: 1;
-    min-width: 0;
+  .crumbs {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: var(--ink-dim);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .stage-bar .crumbs .c-cat { color: var(--ink); font-weight: 600; }
-  .stage-bar .crumbs .c-url {
+    gap: 6px;
+    font-size: .82rem;
     color: var(--ink-mute);
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: .78rem;
+    flex: 1;
+    min-width: 0;
+  }
+  .crumbs .c-url { display: none; }
+  .crumbs span[aria-hidden] { color: rgba(20,40,90,.25); }
+
+  #crumbCat {
+    color: var(--ink-dim);
+    font-weight: 600;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
+  /* Back button */
+  #backBtn {
+    display: none;
+    background: var(--surface-2);
+    border: 1px solid rgba(20,40,90,.10);
+    border-radius: var(--radius-s);
+    color: var(--ink-dim);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    flex-shrink: 0;
+    transition: background .12s, color .12s;
+  }
+  #backBtn:hover { background: var(--surface); color: var(--ink); }
+  #backBtn.show { display: inline-flex; align-items: center; gap: 4px; }
+
+  /* ───── Frame area ───── */
   .frame-wrap {
     flex: 1;
     position: relative;
+    overflow: hidden;
     min-height: 0;
-    display: grid;
-    place-items: stretch;
   }
+
   iframe.game {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    border: 0;
-    background: var(--surface);
-    display: block;
+    border: none;
+    display: none;
   }
 
-  /* placeholder when no URL */
+  /* Home / category placeholder */
   .placeholder {
-    margin: auto;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
     text-align: center;
-    padding: 32px;
-    max-width: 480px;
-    color: var(--ink-dim);
+    overflow-y: auto;
   }
-  .placeholder .ph-emoji {
-    font-size: 3rem;
-    margin-bottom: 12px;
-    display: inline-block;
-    animation: bob 4s ease-in-out infinite;
-  }
-  @keyframes bob {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
-  }
-  .placeholder h2 { margin: 0 0 8px; color: var(--ink); font-size: 1.25rem; }
-  .placeholder p { margin: 6px 0; line-height: 1.6; }
-  .placeholder code {
-    background: var(--surface-2);
-    padding: 2px 8px;
-    border-radius: 6px;
-    font-size: .85em;
-  }
-  .placeholder ol {
-    margin: 12px auto 0;
-    text-align: left;
-    max-width: 380px;
-    color: var(--ink-dim);
-    line-height: 1.6;
-    padding-left: 22px;
-  }
+  .placeholder p { color: var(--ink-dim); line-height: 1.6; max-width: 460px; margin: 6px auto; }
+  .placeholder ol { margin: 12px auto 0; text-align: left; max-width: 380px; color: var(--ink-dim); line-height: 1.6; padding-left: 22px; }
+  .placeholder h2 { color: var(--ink); margin: 0 0 6px; font-size: 1.35rem; }
+  .placeholder code { background: var(--surface-2); border-radius: 4px; padding: 1px 5px; font-size: .88em; }
+  .ph-emoji { font-size: 3.2rem; margin-bottom: 10px; line-height: 1; }
 
-  /* loading scrim */
+  /* Loading scrim */
   .scrim {
     position: absolute;
     inset: 0;
@@ -394,7 +371,7 @@
     place-items: center;
     background: rgba(11,16,32,.7);
     backdrop-filter: blur(2px);
-    color: var(--ink-dim);
+    color: #fff;
     font-size: .9rem;
     opacity: 0;
     pointer-events: none;
@@ -412,6 +389,126 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* ───── Game list (category view) ───── */
+  #gameList {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    padding: 24px;
+    display: none;
+  }
+  #gameList.show { display: block; }
+  #gameList::-webkit-scrollbar { width: 6px; }
+  #gameList::-webkit-scrollbar-thumb { background: rgba(20,40,90,.12); border-radius: 3px; }
+
+  .game-list-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .game-list-cat-glyph { font-size: 2rem; }
+  .game-list-cat-info h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--ink);
+  }
+  .game-list-cat-info p {
+    margin: 2px 0 0;
+    font-size: .78rem;
+    color: var(--ink-mute);
+  }
+
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .game-card {
+    background: var(--surface);
+    border: 1.5px solid rgba(20,40,90,.08);
+    border-radius: var(--radius-m);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 16px 16px;
+    text-align: left;
+    font-family: inherit;
+    transition: box-shadow .15s, border-color .15s, transform .13s;
+    position: relative;
+    overflow: hidden;
+  }
+  .game-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-color, var(--accent));
+  }
+  .game-card:hover {
+    box-shadow: var(--shadow-2);
+    border-color: color-mix(in srgb, var(--card-color, var(--accent)) 50%, transparent);
+    transform: translateY(-2px);
+  }
+  .game-card:active { transform: translateY(0); }
+  .game-card-glyph {
+    font-size: 2rem;
+    line-height: 1;
+  }
+  .game-card-title {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .game-card-desc {
+    font-size: .78rem;
+    color: var(--ink-dim);
+    line-height: 1.5;
+    flex: 1;
+  }
+  .game-card-url {
+    font-size: .68rem;
+    color: var(--ink-mute);
+    font-family: ui-monospace, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .game-card-arrow {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    color: var(--ink-mute);
+    font-size: 1rem;
+    transition: color .12s, transform .12s;
+  }
+  .game-card:hover .game-card-arrow {
+    color: var(--card-color, var(--accent));
+    transform: translateX(3px);
+  }
+
+  /* Placeholder category empty */
+  .cat-empty-card {
+    background: var(--surface-2);
+    border: 1.5px dashed rgba(20,40,90,.15);
+    border-radius: var(--radius-m);
+    color: var(--ink-mute);
+    cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 28px 16px;
+    text-align: center;
+    min-height: 140px;
+  }
+  .cat-empty-card .ge { font-size: 2rem; opacity: .5; }
+  .cat-empty-card p { font-size: .78rem; margin: 0; line-height: 1.5; }
+
   /* ───── QR Modal ───── */
   #qr-modal {
     position: fixed;
@@ -425,10 +522,7 @@
     pointer-events: none;
     transition: opacity .2s ease;
   }
-  #qr-modal.show {
-    opacity: 1;
-    pointer-events: all;
-  }
+  #qr-modal.show { opacity: 1; pointer-events: all; }
   #qr-modal .qr-backdrop {
     position: absolute;
     inset: 0;
@@ -446,16 +540,11 @@
     width: 100%;
     text-align: center;
   }
-  #qr-modal .qr-title {
-    margin: 0 0 18px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--ink);
-  }
+  #qr-modal .qr-title { margin: 0 0 18px; font-size: 1.1rem; font-weight: 700; }
   #qr-modal .qr-canvas-wrap {
     display: inline-block;
     padding: 14px;
-    background: #ffffff;
+    background: #fff;
     border-radius: 14px;
     border: 2px solid var(--surface-2);
     box-shadow: var(--shadow-1);
@@ -473,110 +562,81 @@
   }
   #qr-modal .qr-close {
     position: absolute;
-    top: 10px;
-    right: 14px;
+    top: 10px; right: 14px;
     background: transparent;
     border: none;
-    font-size: 1.4rem;
+    border-radius: 50%;
     color: var(--ink-mute);
     cursor: pointer;
+    font-size: 1.4rem;
     line-height: 1;
-    padding: 4px;
-    border-radius: 6px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 4px 6px;
+    transition: background .12s, color .12s;
   }
   #qr-modal .qr-close:hover { background: var(--surface-2); color: var(--ink); }
-  #qr-modal .qr-close:focus-visible { outline: 2px solid var(--accent); }
 
   /* ───── Toast ───── */
   #toast {
     position: fixed;
+    bottom: 24px;
     left: 50%;
-    bottom: 28px;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--surface-2);
-    color: var(--ink);
-    padding: 10px 18px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,.08);
-    box-shadow: var(--shadow-2);
-    font-size: .9rem;
-    opacity: 0;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--ink);
+    border-radius: 50px;
+    color: #fff;
+    font-size: .82rem;
+    font-weight: 600;
+    padding: 10px 22px;
+    transition: transform .22s ease, opacity .22s ease;
+    z-index: 300;
     pointer-events: none;
-    transition: opacity .18s ease, transform .18s ease;
-    z-index: 99;
-    max-width: 80vw;
+    white-space: nowrap;
+    max-width: calc(100vw - 48px);
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  #toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
 
   /* ───── Footer ───── */
   .site-footer {
     flex: 0 0 auto;
     height: var(--footer-h);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #ffffff;
-    color: var(--ink-dim);
-    font-size: .82rem;
-    text-align: center;
-    padding: 0 16px;
-    border-top: 3px solid transparent;
-    border-image: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%) 1;
-    box-shadow: 0 -4px 16px rgba(28,72,128,.06);
+    background: var(--surface);
+    border-top: 1px solid rgba(20,40,90,.07);
   }
   .site-footer-inner {
+    height: 100%;
     display: flex;
-    flex-wrap: wrap;
-    gap: 4px 18px;
-    justify-content: center;
     align-items: center;
     line-height: 1.4;
   }
-  .site-footer-name {
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .site-footer-copy {
-    color: var(--ink-dim);
-  }
+  .site-footer-name { font-weight: 600; color: var(--ink); }
+  .site-footer-copy { color: var(--ink-dim); }
 
   /* ───── Mobile ───── */
   @media (max-width: 860px) {
     :root { --sidebar-w: 100vw; --header-h: auto; --footer-h: auto; }
     header { padding: 10px 14px; gap: 10px; }
     .brand-logo { width: 44px; height: 44px; border-radius: 10px; }
-    .brand-logo-fallback { font-size: 1.6rem; }
+    .brand-logo-fallback { width: 44px; height: 44px; font-size: 1.4rem; }
     .brand-name { font-size: .95rem; }
     .brand-en { display: none; }
-    main {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
-    }
-    aside {
-      border-right: 0;
-      border-bottom: 1px solid rgba(20,40,90,.10);
-      max-height: 44vh;
-    }
-    aside.collapsed { display: none; }
+    main { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    aside { border-right: 0; border-bottom: 1px solid rgba(20,40,90,.10); max-height: 44vh; }
+    aside.collapsed { display: flex; }
     .toggle { display: inline-flex; }
     .stage-bar .crumbs .c-url { display: none; }
     .site-footer-inner { gap: 2px 12px; }
+    .game-grid { grid-template-columns: 1fr 1fr; }
   }
 
-  /* High-contrast preference */
+  @media (max-width: 500px) {
+    .game-grid { grid-template-columns: 1fr; }
+  }
+
   @media (prefers-contrast: more) {
-    .cat, .btn { border-width: 2px; }
+    .cat, .game-card { border-width: 2px; }
   }
-
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: .001ms !important;
@@ -588,7 +648,7 @@
 <body>
 
 <header role="banner">
-  <button id="toggleAside" class="toggle" aria-label="切換分類選單" aria-expanded="true">≡</button>
+  <button id="toggleAside" class="toggle btn icon" aria-label="切換分類選單" aria-expanded="true">≡</button>
   <div class="brand">
     <img class="brand-logo"
          src="https://www.puichi.edu.hk/it-school/php/webcms/files/upload/tinymce//1a__pui_chi_logo_png_1791177564.png"
@@ -601,16 +661,14 @@
   </div>
   <div class="spacer"></div>
   <div class="topbar-actions">
-    <!-- Language toggle -->
-    <div class="lang-toggle" role="group" aria-label="語言切換 / Language">
+    <div class="lang-toggle" role="group" aria-label="語言切換">
       <button id="langZh" class="active" data-lang="zh">中文</button>
       <button id="langEn" data-lang="en">EN</button>
     </div>
-    <button id="qrBtn" class="btn icon" title="顯示 QR Code" aria-label="顯示 QR Code">�QR</button>
+    <button id="qrBtn" class="btn icon" title="QR Code" aria-label="顯示 QR Code">QR</button>
     <button id="goHome" class="btn icon" title="回首頁" aria-label="回首頁">🏠</button>
     <button id="reloadBtn" class="btn icon" title="重新載入" aria-label="重新載入">↻</button>
-    <button id="externalBtn" class="btn icon" disabled
-            title="在新分頁開啟" aria-label="在新分頁開啟">↗</button>
+    <button id="externalBtn" class="btn icon" disabled title="在新分頁開啟" aria-label="在新分頁開啟">↗</button>
   </div>
 </header>
 
@@ -622,33 +680,41 @@
 
   <section class="stage" aria-live="polite">
     <div class="stage-bar">
+      <button id="backBtn">← <span data-i="back">返回</span></button>
       <div class="crumbs">
         <span data-i="crumb-overview">遊戲總覽</span>
         <span aria-hidden="true">›</span>
-        <span class="c-cat" id="crumbCat" data-i="crumb-none">尚未選擇</span>
+        <span id="crumbCat" data-i="crumb-none">尚未選擇</span>
         <span aria-hidden="true">·</span>
         <span class="c-url" id="crumbUrl"></span>
       </div>
     </div>
 
     <div class="frame-wrap">
-      <!-- Default landing: instructions card -->
+      <!-- Home placeholder -->
       <div class="placeholder" id="placeholder">
         <div class="ph-emoji" aria-hidden="true">🎮</div>
         <h2 data-i="ph-title">歡迎使用學習遊戲 Hub</h2>
-        <p data-i="ph-desc">從左邊(或者手機嘅上方)揀一個學習範疇,就會喺呢度用 iframe 載入遊戲。</p>
-        <p data-i="ph-hint">等你填咗 <code>GAMES</code> 入面嘅 URL 就可以即刻試。</p>
+        <p data-i="ph-desc">從左邊揀一個學習範疇，睇吓入面有咩遊戲，然後點擊進入。</p>
+        <p data-i="ph-hint">等你填咗 CATEGORIES 入面嘅遊戲 URL 就可即試。</p>
         <ol>
           <li data-i="ph-step1">打開 <code>index.html</code></li>
-          <li data-i="ph-step2">最頂 <code>const GAMES</code> 入面有 8 個範疇</li>
-          <li data-i="ph-step3">每個範疇嘅 <code>url</code> 換成你揀好嘅學習網站</li>
-          <li data-i="ph-step4">儲存檔案 → 重新載入瀏覽器</li>
+          <li data-i="ph-step2">搵到最頂 <code>const CATEGORIES</code></li>
+          <li data-i="ph-step3">每個範疇入面嘅 <code>url</code> 換成你揀好嘅學習網站</li>
+          <li data-i="ph-step4">儲存 → 重新載入瀏覽器</li>
         </ol>
       </div>
 
+      <!-- Category game list -->
+      <div id="gameList">
+        <div class="game-list-header" id="gameListHeader"></div>
+        <div class="game-grid" id="gameGrid"></div>
+      </div>
+
+      <!-- iframe -->
       <iframe id="frame"
               class="game"
-              title="學習遊戲載入區"
+              title="學習遊戲"
               sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
               referrerpolicy="no-referrer-when-downgrade"
               allow="fullscreen"
@@ -665,7 +731,7 @@
 
 <div id="toast" role="status" aria-live="polite"></div>
 
-<!-- QR Code Modal -->
+<!-- QR Modal -->
 <div id="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qr-title-text">
   <div class="qr-backdrop" id="qr-backdrop"></div>
   <div class="qr-panel">
@@ -685,167 +751,262 @@
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.4/build/qrcode.min.js"></script>
 <script>
-  /* ============================================================
-   *  GAMES — edit URLs here (one place)
-   *  Each entry: id, label (zh), labelEn, glyph (emoji), color, url.
-   *  Leave url empty string '' to show in-app placeholder for that category.
-   * ============================================================ */
-  const GAMES = [
-    { id: 'lang',    label: '語文',       labelEn: 'Language',      glyph: '📖', color: 'var(--c-lang)',    url: 'https://ihateusingai-beep.github.io/buy-xx-master/' },
-    { id: 'math',    label: '數學',       labelEn: 'Math',           glyph: '🔢', color: 'var(--c-math)',    url: 'https://ihateusingai-beep.github.io/math-guardian/' },
-    { id: 'code',    label: '電腦',       labelEn: 'Computing',      glyph: '💻', color: 'var(--c-code)',    url: 'https://ihateusingai-beep.github.io/art-prompt-builder/' },
-    { id: 'human',   label: '人文',       labelEn: 'Humanities',     glyph: '🏛️', color: 'var(--c-human)',   url: '' },
-    { id: 'science', label: '科學',       labelEn: 'Science',        glyph: '🔬', color: 'var(--c-science)', url: '' },
-    { id: 'life',    label: '生活技能',   labelEn: 'Life Skills',    glyph: '🧩', color: 'var(--c-life)',    url: '' },
-    { id: 'comm',    label: '溝通',       labelEn: 'Communication',  glyph: '💬', color: 'var(--c-comm)',    url: 'https://ihateusingai-beep.github.io/sen-aac-p0/' },
-    { id: 'comm2',  label: '朗讀詞彙',   labelEn: 'Reading Score',   glyph: '📝', color: 'var(--c-comm)',    url: 'https://ihateusingai-beep.github.io/sen-yue-read-score/' },
-    { id: 'values',  label: '價值觀',     labelEn: 'Values',         glyph: '⭐', color: 'var(--c-values)',  url: 'https://ihateusingai-beep.github.io/friendly-classroom-v2/' },
-    { id: 'prompt',  label: '創意教學',   labelEn: 'Prompt Studio',  glyph: '✨', color: 'var(--c-life)',    url: 'https://ihateusingai-beep.github.io/innovative-teaching-prompt-studio/' }
-  ];
+/* ============================================================
+ *  CATEGORIES — two-level hierarchy
+ *  Each category has a games[] array.
+ *  Each game: { id, label, labelEn, desc, descEn, glyph, color, url }
+ *  Leave url empty '' to show "coming soon" placeholder card.
+ * ============================================================ */
+const CATEGORIES = [
+  {
+    id: 'lang', label: '語文', labelEn: 'Language', glyph: '📖', color: 'var(--c-lang)',
+    games: [
+      {
+        id: 'buy-xx', label: 'Buy X X Master', labelEn: 'Buy X X Master',
+        desc: '語文詞彙學習工具', descEn: 'Language & vocabulary learning tool',
+        glyph: '📖', color: 'var(--c-lang)',
+        url: 'https://ihateusingai-beep.github.io/buy-xx-master/'
+      }
+    ]
+  },
+  {
+    id: 'math', label: '數學', labelEn: 'Math', glyph: '🔢', color: 'var(--c-math)',
+    games: [
+      {
+        id: 'math-guardian', label: 'Math Guardian 數學護衛', labelEn: 'Math Guardian',
+        desc: '數學練習與解題訓練', descEn: 'Math practice & problem solving',
+        glyph: '🔢', color: 'var(--c-math)',
+        url: 'https://ihateusingai-beep.github.io/math-guardian/'
+      }
+    ]
+  },
+  {
+    id: 'code', label: '電腦', labelEn: 'Computing', glyph: '💻', color: 'var(--c-code)',
+    games: [
+      {
+        id: 'art-prompt', label: 'Art Prompt Builder', labelEn: 'Art Prompt Builder',
+        desc: '創意藝術提示詞生成器', descEn: 'Creative art prompt builder',
+        glyph: '💻', color: 'var(--c-code)',
+        url: 'https://ihateusingai-beep.github.io/art-prompt-builder/'
+      }
+    ]
+  },
+  {
+    id: 'comm', label: '溝通', labelEn: 'Communication', glyph: '💬', color: 'var(--c-comm)',
+    games: [
+      {
+        id: 'sen-aac', label: 'SEN AAC 輔助溝通', labelEn: 'SEN AAC Communication',
+        desc: '特殊教育需要學童輔助溝通工具', descEn: 'AAC tool for SEN students',
+        glyph: '💬', color: 'var(--c-comm)',
+        url: 'https://ihateusingai-beep.github.io/sen-aac-p0/'
+      },
+      {
+        id: 'yue-read', label: '粵語朗讀詞彙', labelEn: 'Cantonese Reading Score',
+        desc: '粵語朗讀詞彙評分工具', descEn: 'Cantonese reading & vocabulary scoring',
+        glyph: '📝', color: 'var(--c-comm)',
+        url: 'https://ihateusingai-beep.github.io/sen-yue-read-score/'
+      }
+    ]
+  },
+  {
+    id: 'values', label: '價值觀', labelEn: 'Values', glyph: '⭐', color: 'var(--c-values)',
+    games: [
+      {
+        id: 'friendly-classroom', label: 'Friendly Classroom 2', labelEn: 'Friendly Classroom',
+        desc: '品德教育與正向課堂', descEn: 'Values education & positive classroom',
+        glyph: '⭐', color: 'var(--c-values)',
+        url: 'https://ihateusingai-beep.github.io/friendly-classroom-v2/'
+      }
+    ]
+  },
+  {
+    id: 'prompt', label: '創意教學', labelEn: 'Prompt Studio', glyph: '✨', color: 'var(--c-life)',
+    games: [
+      {
+        id: 'prompt-studio', label: '創意教學 Prompt Studio', labelEn: 'Innovative Teaching Prompt Studio',
+        desc: '特殊教育創意教學提示詞工具', descEn: 'Creative teaching prompt tool for SEN',
+        glyph: '✨', color: 'var(--c-life)',
+        url: 'https://ihateusingai-beep.github.io/innovative-teaching-prompt-studio/'
+      }
+    ]
+  },
+  {
+    id: 'human', label: '人文', labelEn: 'Humanities', glyph: '🏛️', color: 'var(--c-human)',
+    games: [
+      {
+        id: 'human-placeholder', label: '敬請期待', labelEn: 'Coming Soon',
+        desc: '人文學科遊戲即將推出', descEn: 'Humanities games coming soon',
+        glyph: '🏛️', color: 'var(--c-human)',
+        url: ''
+      }
+    ]
+  },
+  {
+    id: 'science', label: '科學', labelEn: 'Science', glyph: '🔬', color: 'var(--c-science)',
+    games: [
+      {
+        id: 'science-placeholder', label: '敬請期待', labelEn: 'Coming Soon',
+        desc: '科學探究遊戲即將推出', descEn: 'Science exploration games coming soon',
+        glyph: '🔬', color: 'var(--c-science)',
+        url: ''
+      }
+    ]
+  },
+  {
+    id: 'life', label: '生活技能', labelEn: 'Life Skills', glyph: '🧩', color: 'var(--c-life)',
+    games: [
+      {
+        id: 'life-placeholder', label: '敬請期待', labelEn: 'Coming Soon',
+        desc: '生活技能訓練遊戲即將推出', descEn: 'Life skills games coming soon',
+        glyph: '🧩', color: 'var(--c-life)',
+        url: ''
+      }
+    ]
+  }
+];
 
   const STORAGE_KEY_LANG  = 'gamesHub.lang';
-  const STORAGE_KEY_CAT   = 'gamesHub.lastSelectedId';
+  const STORAGE_KEY_CAT   = 'gamesHub.lastCatId';
 
-  /* ───── Internationalisation ───── */
+  /* ───── I18N ───── */
   const I18N = {
     zh: {
-      'side-head':       '選擇學習範疇',
-      'crumb-overview':  '遊戲總覽',
-      'crumb-none':      '尚未選擇',
-      'ph-title':        '歡迎使用學習遊戲 Hub',
-      'ph-desc':         '從左邊(或者手機嘅上方)揀一個學習範疇,就會喺呢度用 iframe 載入遊戲。',
-      'ph-hint':         '等你填咗 GAMES 入面嘅 URL 就可以即刻試。',
-      'ph-step1':        '打開 index.html',
-      'ph-step2':        '最頂 const GAMES 入面有 8 個範疇',
-      'ph-step3':        '每個範疇嘅 url 換成你揀好嘅學習網站',
-      'ph-step4':        '儲存檔案 → 重新載入瀏覽器',
-      'scrim-loading':   '載入中…',
-      'qr-title':        'QR Code',
-      'qr-no-url':       '呢個範疇未有 URL',
-      'toast-no-cat':    '揀一個範疇先啦',
-      'toast-qr-empty':  '呢個範疇未有 URL',
-      'toast-copied':    '已複製連結！',
-      'placeholder-cat':  '呢個範疇暫時未有 URL。',
-      'placeholder-tip': '打開 index.html,搵到 GAMES 入面 {id} 嗰個 entry,填入 url: \'https://...\' 就會自動載入。',
-      'status-ready':     '● ready',
-      'status-missing':   '○ empty',
+      'side-head':        '選擇學習範疇',
+      'back':             '返回',
+      'crumb-overview':   '遊戲總覽',
+      'crumb-none':       '尚未選擇',
+      'ph-title':         '歡迎使用學習遊戲 Hub',
+      'ph-desc':          '從左邊揀一個學習範疇，睇吓入面有咩遊戲，然後點擊進入。',
+      'ph-hint':          '等你填咗 CATEGORIES 入面嘅遊戲 URL 就可即試。',
+      'ph-step1':         '打開 <code>index.html</code>',
+      'ph-step2':         '搵到最頂 <code>const CATEGORIES</code>',
+      'ph-step3':         '每個範疇入面嘅 <code>url</code> 換成你揀好嘅學習網站',
+      'ph-step4':         '儲存 → 重新載入瀏覽器',
+      'scrim-loading':    '載入中…',
+      'qr-title':         'QR Code',
+      'qr-no-url':        '呢個範疇未有 URL',
+      'toast-no-cat':     '揀一個範疇先啦',
+      'toast-no-game':    '揀一個遊戲先啦',
+      'toast-qr-empty':   '呢個未有 QR Code',
+      'toast-copied':     '已複製連結！',
+      'coming-soon':      '敬請期待',
+      'coming-soon-desc': '呢個範疇嘅遊戲即將推出',
+      'games-count':      '{n} 個遊戲',
+      'status-ready':     '●',
+      'status-empty':     '○',
     },
     en: {
-      'side-head':       'Select Learning Category',
-      'crumb-overview':  'Game Hub',
-      'crumb-none':      'Not selected',
-      'ph-title':        'Welcome to Learning Games Hub',
-      'ph-desc':         'Pick a category from the left (or top on mobile) to load the game here via iframe.',
-      'ph-hint':         'Fill in the URLs in GAMES above to get started.',
-      'ph-step1':        'Open index.html',
-      'ph-step2':        'Find const GAMES at the top — 8 categories',
-      'ph-step3':        'Set each category\'s url to your chosen learning site',
-      'ph-step4':        'Save → reload the browser',
-      'scrim-loading':   'Loading…',
-      'qr-title':        'QR Code',
-      'qr-no-url':       'No URL for this category yet',
-      'toast-no-cat':    'Pick a category first',
-      'toast-qr-empty':  'No URL for this category',
-      'toast-copied':    'Link copied!',
-      'placeholder-cat':  'No URL set for this category yet.',
-      'placeholder-tip': 'Open index.html, find the {id} entry in GAMES, set url: \'https://...\' and it will load automatically.',
-      'status-ready':     '● ready',
-      'status-missing':   '○ empty',
+      'side-head':        'Select Learning Category',
+      'back':             'Back',
+      'crumb-overview':   'Game Hub',
+      'crumb-none':       'Not selected',
+      'ph-title':         'Welcome to Learning Games Hub',
+      'ph-desc':          'Pick a category from the left to see its games, then click to open.',
+      'ph-hint':          'Fill in game URLs in CATEGORIES above to get started.',
+      'ph-step1':         'Open <code>index.html</code>',
+      'ph-step2':         'Find <code>const CATEGORIES</code> at the top',
+      'ph-step3':         'Set each game\'s <code>url</code> to your chosen learning site',
+      'ph-step4':         'Save → reload the browser',
+      'scrim-loading':    'Loading…',
+      'qr-title':         'QR Code',
+      'qr-no-url':        'No URL set yet',
+      'toast-no-cat':     'Pick a category first',
+      'toast-no-game':    'Pick a game first',
+      'toast-qr-empty':   'No QR Code yet',
+      'toast-copied':     'Link copied!',
+      'coming-soon':      'Coming Soon',
+      'coming-soon-desc': 'Games for this category are coming soon',
+      'games-count':      '{n} games',
+      'status-ready':     '●',
+      'status-empty':     '○',
     }
   };
 
   let currentLang = 'zh';
 
-  function t(key) {
-    return I18N[currentLang][key] || key;
+  function t(key, vars) {
+    let s = I18N[currentLang][key] || key;
+    if (vars) { for (const [k, v] of Object.entries(vars)) s = s.replace('{' + k + '}', v); }
+    return s;
   }
 
   function applyI18n() {
     document.querySelectorAll('[data-i]').forEach(el => {
       const key = el.dataset.i;
-      if (I18N[currentLang][key] !== undefined) {
-        el.textContent = I18N[currentLang][key];
-      }
+      if (I18N[currentLang][key] !== undefined) el.textContent = I18N[currentLang][key];
     });
-    // Update sidebar
-    GAMES.forEach(g => {
-      const btn = catList.querySelector('.cat[data-id="' + g.id + '"]');
+    // Sidebar labels
+    CATEGORIES.forEach(c => {
+      const btn = catList.querySelector('.cat[data-id="' + c.id + '"]');
       if (!btn) return;
-      const label = btn.querySelector('.label');
-      label.childNodes[0].textContent = (currentLang === 'zh' ? g.label : g.labelEn) + ' ';
-      const small = btn.querySelector('.label small');
-      small.textContent = (currentLang === 'zh' ? g.labelEn : g.label);
+      const label = btn.querySelector('.cat-label');
+      label.innerHTML = (currentLang === 'zh' ? c.label : c.labelEn) +
+        '<small>' + (currentLang === 'zh' ? c.labelEn : c.label) + '</small>';
+      const badge = btn.querySelector('.cat-badge');
+      badge.textContent = c.games.length;
       const status = btn.querySelector('.status');
-      if (g.url && g.url.trim() !== '') {
+      const ready = c.games.filter(g => g.url && g.url.trim() !== '').length;
+      if (ready > 0) {
         status.innerHTML = '<span class="ready">' + t('status-ready') + '</span>';
       } else {
-        status.innerHTML = '<span class="missing">' + t('status-missing') + '</span>';
+        status.innerHTML = '<span class="missing">' + t('status-empty') + '</span>';
       }
     });
-    // Update stage bar
-    document.querySelector('[data-i="crumb-overview"]').textContent = t('crumb-overview');
-    // Update lang toggle
     document.getElementById('langZh').classList.toggle('active', currentLang === 'zh');
     document.getElementById('langEn').classList.toggle('active', currentLang === 'en');
-    // Re-render placeholder if home
-    if (!current) renderHomePlaceholder();
+    // Re-render current view
+    if (state.cat) renderCategoryView(state.cat);
   }
 
-  /* ───── DOM ref ───── */
-  const catList     = document.getElementById('catList');
-  const frame       = document.getElementById('frame');
-  const placeholder = document.getElementById('placeholder');
-  const scrim       = document.getElementById('scrim');
-  const crumbCat    = document.getElementById('crumbCat');
-  const crumbUrl    = document.getElementById('crumbUrl');
-  const externalBtn = document.getElementById('externalBtn');
-  const reloadBtn   = document.getElementById('reloadBtn');
-  const goHome      = document.getElementById('goHome');
-  const toggleBtn   = document.getElementById('toggleAside');
-  const aside       = document.getElementById('aside');
-  const toast       = document.getElementById('toast');
-  const qrModal     = document.getElementById('qr-modal');
-  const qrWrap      = document.getElementById('qr-canvas-wrap');
-  const qrUrlText   = document.getElementById('qr-url-text');
-  const qrClose     = document.getElementById('qr-close');
-  const qrBackdrop  = document.getElementById('qr-backdrop');
-  const qrBtn       = document.getElementById('qrBtn');
+  /* ───── DOM refs ───── */
+  const catList      = document.getElementById('catList');
+  const frame         = document.getElementById('frame');
+  const placeholder   = document.getElementById('placeholder');
+  const scrim         = document.getElementById('scrim');
+  const crumbCat      = document.getElementById('crumbCat');
+  const crumbUrl      = document.getElementById('crumbUrl');
+  const backBtn       = document.getElementById('backBtn');
+  const gameListEl    = document.getElementById('gameList');
+  const gameListHdr   = document.getElementById('gameListHeader');
+  const gameGrid      = document.getElementById('gameGrid');
+  const externalBtn   = document.getElementById('externalBtn');
+  const reloadBtn     = document.getElementById('reloadBtn');
+  const goHome        = document.getElementById('goHome');
+  const toggleBtn     = document.getElementById('toggleAside');
+  const aside         = document.getElementById('aside');
+  const toast         = document.getElementById('toast');
+  const qrModal       = document.getElementById('qr-modal');
+  const qrWrap        = document.getElementById('qr-canvas-wrap');
+  const qrUrlText     = document.getElementById('qr-url-text');
+  const qrClose       = document.getElementById('qr-close');
+  const qrBackdrop    = document.getElementById('qr-backdrop');
+  const qrBtn         = document.getElementById('qrBtn');
+
+  /* ───── App state ───── */
+  // state.view: 'home' | 'category' | 'game'
+  // state.cat: CATEGORIES entry | null
+  // state.game: game entry | null
+  const state = { view: 'home', cat: null, game: null };
 
   /* ───── Build sidebar ───── */
   function buildList() {
     const frag = document.createDocumentFragment();
-    GAMES.forEach(g => {
+    CATEGORIES.forEach(c => {
       const li = document.createElement('li');
       const btn = document.createElement('button');
       btn.className = 'cat';
-      btn.dataset.id = g.id;
+      btn.dataset.id = c.id;
       btn.type = 'button';
       btn.setAttribute('role', 'option');
       btn.setAttribute('aria-selected', 'false');
-      btn.style.setProperty('--cat-color', g.color);
-
-      btn.innerHTML = [
-        '<span class="glyph" aria-hidden="true">', g.glyph, '</span>',
-        '<span class="label">', g.label,
-          '<small>', g.labelEn, '</small>',
-        '</span>',
-        '<span class="status"></span>'
-      ].join('');
-
-      btn.addEventListener('click', () => selectCategory(g.id, true));
-      btn.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-          e.preventDefault();
-          moveFocus(e.key === 'ArrowDown' ? 1 : -1);
-        } else if (e.key === 'Home') {
-          e.preventDefault();
-          focusIndex(0);
-        } else if (e.key === 'End') {
-          e.preventDefault();
-          focusIndex(GAMES.length - 1);
-        }
-      });
-
+      btn.style.setProperty('--cat-color', c.color);
+      const ready = c.games.filter(g => g.url && g.url.trim()).length;
+      btn.innerHTML =
+        '<span class="glyph" aria-hidden="true">' + c.glyph + '</span>' +
+        '<span class="cat-label">' + c.label + '<small>' + c.labelEn + '</small></span>' +
+        '<span class="cat-badge">' + c.games.length + '</span>' +
+        '<span class="status"></span>';
+      btn.addEventListener('click', () => selectCategory(c.id));
       li.appendChild(btn);
       frag.appendChild(li);
     });
@@ -853,78 +1014,155 @@
     paintStatuses();
   }
 
-  function moveFocus(delta) {
-    const items = [...catList.querySelectorAll('.cat')];
-    const idx = items.indexOf(document.activeElement);
-    if (idx < 0) return focusIndex(0);
-    focusIndex((idx + delta + items.length) % items.length);
-  }
-  function focusIndex(i) {
-    const items = catList.querySelectorAll('.cat');
-    if (items[i]) items[i].focus();
-  }
-
   function paintStatuses() {
-    GAMES.forEach(g => {
-      const btn = catList.querySelector('.cat[data-id="' + g.id + '"]');
+    CATEGORIES.forEach(c => {
+      const btn = catList.querySelector('.cat[data-id="' + c.id + '"]');
       if (!btn) return;
       const status = btn.querySelector('.status');
-      if (g.url && g.url.trim() !== '') {
+      const ready = c.games.filter(g => g.url && g.url.trim()).length;
+      if (ready > 0) {
         status.innerHTML = '<span class="ready">' + t('status-ready') + '</span>';
       } else {
-        status.innerHTML = '<span class="missing">' + t('status-missing') + '</span>';
+        status.innerHTML = '<span class="missing">' + t('status-empty') + '</span>';
       }
     });
   }
 
-  /* ───── Selection / iframe loading ───── */
-  let current = null;
+  /* ───── Navigation ───── */
+  function selectCategory(catId) {
+    const cat = CATEGORIES.find(x => x.id === catId);
+    if (!cat) return;
 
-  function selectCategory(id, remember) {
-    const g = GAMES.find(x => x.id === id);
-    if (!g) return;
+    state.cat = cat;
+    state.game = null;
+    state.view = 'category';
 
-    // visual selection
     catList.querySelectorAll('.cat').forEach(el => {
-      el.setAttribute('aria-selected', el.dataset.id === id ? 'true' : 'false');
+      el.setAttribute('aria-selected', el.dataset.id === catId ? 'true' : 'false');
     });
 
-    const catLabel = currentLang === 'zh'
-      ? (g.label + ' · ' + g.labelEn)
-      : (g.labelEn + ' · ' + g.label);
+    const catLabel = currentLang === 'zh' ? cat.label + ' · ' + cat.labelEn : cat.labelEn + ' · ' + cat.label;
     crumbCat.textContent = catLabel;
-    crumbUrl.textContent = g.url || (currentLang === 'zh' ? '(URL 未設定)' : '(URL not set)');
-    externalBtn.disabled = !g.url;
+    crumbUrl.textContent = '';
 
-    if (g.url && g.url.trim() !== '') {
-      placeholder.style.display = 'none';
-      frame.style.display = 'block';
-      scrim.classList.add('show');
-      frame.src = g.url + (g.url.includes('?') ? '&' : '?') + 't=' + Date.now();
-    } else {
-      frame.style.display = 'none';
-      frame.src = 'about:blank';
-      placeholder.style.display = '';
-      const tip = (currentLang === 'zh' ? g.label : g.labelEn) + ' ';
-      placeholder.innerHTML = [
-        '<div class="ph-emoji" aria-hidden="true">', g.glyph, '</div>',
-        '<h2>', (currentLang === 'zh' ? g.label : g.labelEn), ' <small style="color:var(--ink-mute);font-weight:500;">· ', (currentLang === 'zh' ? g.labelEn : g.label), '</small></h2>',
-        '<p>' + t('placeholder-cat') + '</p>',
-        '<p>' + t('placeholder-tip').replace('{id}', g.id) + '</p>'
-      ].join('');
-      scrim.classList.remove('show');
-    }
+    backBtn.classList.add('show');
+    externalBtn.disabled = true;
 
-    if (remember) {
-      try { localStorage.setItem(STORAGE_KEY_CAT, id); } catch (_) {}
-    }
-    current = g;
+    renderCategoryView(cat);
 
-    // mobile: collapse sidebar after selection
+    try { localStorage.setItem(STORAGE_KEY_CAT, catId); } catch (_) {}
+
     if (window.matchMedia('(max-width: 860px)').matches) {
       aside.classList.add('collapsed');
       toggleBtn.setAttribute('aria-expanded', 'false');
     }
+  }
+
+  function selectGame(game) {
+    state.game = game;
+    state.view = 'game';
+
+    const label = currentLang === 'zh' ? game.label : game.labelEn;
+    crumbUrl.textContent = label;
+
+    if (game.url && game.url.trim() !== '') {
+      placeholder.style.display = 'none';
+      gameListEl.classList.remove('show');
+      frame.style.display = 'block';
+      scrim.classList.add('show');
+      frame.src = game.url + (game.url.includes('?') ? '&' : '?') + 't=' + Date.now();
+      externalBtn.disabled = false;
+    } else {
+      // Coming soon
+      showToast(t('coming-soon'));
+    }
+  }
+
+  function goBack() {
+    if (state.view === 'game') {
+      // Back to category list
+      state.game = null;
+      state.view = 'category';
+      crumbUrl.textContent = '';
+      frame.style.display = 'none';
+      frame.src = 'about:blank';
+      scrim.classList.remove('show');
+      externalBtn.disabled = true;
+      placeholder.style.display = 'none';
+      gameListEl.classList.add('show');
+      backBtn.innerHTML = '← <span data-i="back">' + t('back') + '</span>';
+    } else if (state.view === 'category') {
+      goHomeFn();
+    }
+  }
+
+  function goHomeFn() {
+    state.view = 'home';
+    state.cat = null;
+    state.game = null;
+
+    catList.querySelectorAll('.cat').forEach(el => el.setAttribute('aria-selected', 'false'));
+    crumbCat.textContent = t('crumb-none');
+    crumbUrl.textContent = '';
+    backBtn.classList.remove('show');
+    externalBtn.disabled = true;
+
+    frame.style.display = 'none';
+    frame.src = 'about:blank';
+    gameListEl.classList.remove('show');
+    scrim.classList.remove('show');
+    placeholder.style.display = '';
+
+    try { localStorage.removeItem(STORAGE_KEY_CAT); } catch (_) {}
+  }
+
+  function renderCategoryView(cat) {
+    placeholder.style.display = 'none';
+    frame.style.display = 'none';
+    frame.src = 'about:blank';
+    gameListEl.classList.add('show');
+
+    const gameCount = cat.games.length;
+    const countText = t('games-count', { n: gameCount });
+    const catName = currentLang === 'zh' ? cat.label + ' · ' + cat.labelEn : cat.labelEn + ' · ' + cat.label;
+
+    gameListHdr.innerHTML =
+      '<span class="game-list-cat-glyph" aria-hidden="true">' + cat.glyph + '</span>' +
+      '<div class="game-list-cat-info">' +
+        '<h2>' + catName + '</h2>' +
+        '<p>' + countText + '</p>' +
+      '</div>';
+
+    gameGrid.innerHTML = '';
+
+    cat.games.forEach(game => {
+      const card = document.createElement('button');
+      card.className = 'game-card';
+      card.type = 'button';
+      card.style.setProperty('--card-color', game.color);
+
+      const label = currentLang === 'zh' ? game.label : game.labelEn;
+      const desc = currentLang === 'zh' ? game.desc : game.descEn;
+      const isReady = game.url && game.url.trim() !== '';
+
+      card.innerHTML =
+        '<span class="game-card-glyph" aria-hidden="true">' + game.glyph + '</span>' +
+        '<div class="game-card-title">' + label + '</div>' +
+        '<div class="game-card-desc">' + desc + '</div>' +
+        (isReady
+          ? '<div class="game-card-url">' + game.url.replace('https://', '') + '</div>'
+          : '<div class="game-card-desc" style="color:var(--ink-mute);font-style:italic;">' + t('coming-soon') + '</div>') +
+        '<span class="game-card-arrow" aria-hidden="true">›</span>';
+
+      if (isReady) {
+        card.addEventListener('click', () => selectGame(game));
+      } else {
+        card.style.opacity = '0.55';
+        card.style.cursor = 'default';
+      }
+
+      gameGrid.appendChild(card);
+    });
   }
 
   /* ───── iframe load events ───── */
@@ -934,44 +1172,43 @@
     showToast(currentLang === 'zh' ? 'iframe 載入失敗 — 試下「外部開啟」↗' : 'iframe load failed — try "Open externally" ↗');
   });
 
-  /* ───── QR Code Modal ───── */
+  /* ───── QR Modal ───── */
   function showQRModal() {
-    if (!current) { showToast(t('toast-no-cat')); return; }
-    if (!current.url || !current.url.trim()) { showToast(t('toast-qr-empty')); return; }
+    let targetUrl = '';
+    if (state.game && state.game.url && state.game.url.trim()) {
+      targetUrl = state.game.url;
+    } else if (state.cat) {
+      const ready = state.cat.games.find(g => g.url && g.url.trim());
+      if (ready) targetUrl = ready.url;
+    }
 
-    qrUrlText.textContent = current.url;
+    if (!targetUrl) {
+      showToast(t('toast-qr-empty'));
+      return;
+    }
+
+    qrUrlText.textContent = targetUrl;
     qrWrap.innerHTML = '';
 
     if (typeof QRCode !== 'undefined') {
-      QRCode.toCanvas(current.url, {
-        width: 200,
-        margin: 2,
+      QRCode.toCanvas(targetUrl, {
+        width: 200, margin: 2,
         color: { dark: '#14306b', light: '#ffffff' }
       }, (err, canvas) => {
-        if (err) {
-          qrWrap.innerHTML = '<p style="color:var(--danger);font-size:.85rem;padding:8px;">QR 生成失敗</p>';
-          return;
-        }
+        if (err) { qrWrap.innerHTML = '<p style="color:var(--danger);font-size:.85rem;padding:8px;">QR 生成失敗</p>'; return; }
         qrWrap.appendChild(canvas);
       });
     } else {
-      // Fallback: create img via Google Charts API
       const img = document.createElement('img');
-      img.src = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=' + encodeURIComponent(current.url) + '&choe=UTF-8';
-      img.alt = 'QR Code for ' + current.url;
-      img.width = 200;
-      img.height = 200;
+      img.src = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=' + encodeURIComponent(targetUrl) + '&choe=UTF-8';
+      img.alt = 'QR Code'; img.width = 200; img.height = 200;
       qrWrap.appendChild(img);
     }
-
     qrModal.classList.add('show');
     qrClose.focus();
   }
 
-  function closeQRModal() {
-    qrModal.classList.remove('show');
-  }
-
+  function closeQRModal() { qrModal.classList.remove('show'); }
   qrBtn.addEventListener('click', showQRModal);
   qrClose.addEventListener('click', closeQRModal);
   qrBackdrop.addEventListener('click', closeQRModal);
@@ -981,36 +1218,29 @@
 
   /* ───── Buttons ───── */
   reloadBtn.addEventListener('click', () => {
-    if (current && current.url) selectCategory(current.id, false);
-    else showToast(t('toast-no-cat'));
-  });
-  externalBtn.addEventListener('click', () => {
-    if (!current || !current.url) return;
-    window.open(current.url, '_blank', 'noopener,noreferrer');
-  });
-  goHome.addEventListener('click', () => {
-    catList.querySelectorAll('.cat').forEach(el => el.setAttribute('aria-selected', 'false'));
-    document.querySelector('[data-i="crumb-overview"]').textContent = t('crumb-overview');
-    crumbCat.textContent = t('crumb-none');
-    crumbUrl.textContent = '';
-    externalBtn.disabled = true;
-    frame.style.display = 'none';
-    frame.src = 'about:blank';
-    renderHomePlaceholder();
-    current = null;
-  });
-  toggleBtn.addEventListener('click', () => {
-    const open = !aside.classList.contains('collapsed');
-    if (open) {
-      aside.classList.add('collapsed');
-      toggleBtn.setAttribute('aria-expanded', 'false');
+    if (state.game && state.game.url) {
+      frame.src = state.game.url + (state.game.url.includes('?') ? '&' : '?') + 't=' + Date.now();
+      scrim.classList.add('show');
     } else {
-      aside.classList.remove('collapsed');
-      toggleBtn.setAttribute('aria-expanded', 'true');
+      showToast(t('toast-no-game'));
     }
   });
 
-  /* ───── Language toggle ───── */
+  externalBtn.addEventListener('click', () => {
+    if (!state.game || !state.game.url) return;
+    window.open(state.game.url, '_blank', 'noopener,noreferrer');
+  });
+
+  goHome.addEventListener('click', goHomeFn);
+  backBtn.addEventListener('click', goBack);
+
+  toggleBtn.addEventListener('click', () => {
+    const open = !aside.classList.contains('collapsed');
+    aside.classList.toggle('collapsed', open);
+    toggleBtn.setAttribute('aria-expanded', String(!open));
+  });
+
+  /* ───── Language ───── */
   document.getElementById('langZh').addEventListener('click', () => setLang('zh'));
   document.getElementById('langEn').addEventListener('click', () => setLang('en'));
 
@@ -1018,10 +1248,6 @@
     currentLang = lang;
     try { localStorage.setItem(STORAGE_KEY_LANG, lang); } catch (_) {}
     applyI18n();
-    // Refresh current view
-    if (current) {
-      selectCategory(current.id, false);
-    }
   }
 
   /* ───── Toast ───── */
@@ -1033,32 +1259,40 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), ms);
   }
 
-  /* ───── Home placeholder ───── */
-  function renderHomePlaceholder() {
-    placeholder.innerHTML = [
-      '<div class="ph-emoji" aria-hidden="true">🎮</div>',
-      '<h2>' + t('ph-title') + '</h2>',
-      '<p>' + t('ph-desc') + '</p>',
-      '<p>' + t('ph-hint') + '</p>',
-      '<ol>',
-        '<li>' + t('ph-step1') + '</li>',
-        '<li>' + t('ph-step2') + '</li>',
-        '<li>' + t('ph-step3') + '</li>',
-        '<li>' + t('ph-step4') + '</li>',
-      '</ol>'
-    ].join('');
+  /* ───── Keyboard nav in sidebar ───── */
+  function moveFocus(dir) {
+    const items = [...catList.querySelectorAll('.cat')];
+    const idx = items.indexOf(document.activeElement);
+    if (idx < 0) return;
+    const next = (idx + dir + items.length) % items.length;
+    items[next].focus();
   }
 
+  catList.addEventListener('keydown', e => {
+    if (e.key === 'ArrowDown') { e.preventDefault(); moveFocus(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); moveFocus(-1); }
+    else if (e.key === 'Home') {
+      e.preventDefault();
+      catList.querySelectorAll('.cat')[0]?.focus();
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      const cats = catList.querySelectorAll('.cat');
+      cats[cats.length - 1]?.focus();
+    }
+  });
+
   /* ───── Boot ───── */
-  // Restore language
   try { currentLang = localStorage.getItem(STORAGE_KEY_LANG) || 'zh'; } catch (_) {}
   buildList();
   applyI18n();
+
   // Restore last selected category
-  let initialId = null;
-  try { initialId = localStorage.getItem(STORAGE_KEY_CAT); } catch (_) {}
-  const initial = GAMES.find(g => g.id === initialId && g.url) || null;
-  if (initial) selectCategory(initial.id, false);
+  let lastCatId = null;
+  try { lastCatId = localStorage.getItem(STORAGE_KEY_CAT); } catch (_) {}
+  if (lastCatId) {
+    const cat = CATEGORIES.find(c => c.id === lastCatId);
+    if (cat) selectCategory(cat.id);
+  }
 </script>
 </body>
 </html>
